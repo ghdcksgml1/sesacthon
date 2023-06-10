@@ -42,3 +42,6 @@ jobs:
     # 기본꺼 종료하고 다시 실행시키는 스크립트 실행
     - name: Stop And Run
       run: /home/hongchanhui/server-restart-sesacthon.sh
+    
+    - name: Start
+      run: java -jar ./build/libs/sesacthon-0.0.1-SNAPSHOT.jar &
