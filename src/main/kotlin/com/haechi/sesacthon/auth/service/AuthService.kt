@@ -12,6 +12,7 @@ import com.haechi.sesacthon.user.model.Role
 import com.haechi.sesacthon.user.model.User
 import com.haechi.sesacthon.auth.dto.kakao.*
 import com.haechi.sesacthon.utils.PhoneNumberValid
+import jakarta.transaction.Transactional
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -36,6 +37,7 @@ class AuthService(
     }
 
     // 토큰 발급 시스템
+    @Transactional
     fun kakaoTokenProvider(code: String): Any {
         // Header 설정
         val tokenRequestHeader = HttpHeaders()
@@ -79,7 +81,8 @@ class AuthService(
                     name = kakaoUserInfo.kakao_account.profile.nickname,
                     role = Role.USER,
                     email = email,
-                    phoneNumber = ""
+                    phoneNumber = "",
+                    profileImageUrl = kakaoUserInfo.kakao_account.profile.profile_image_url
                 )
             )
 
@@ -101,6 +104,7 @@ class AuthService(
         return AuthResponse(jwtToken)
     }
 
+    @Transactional
     fun register(requestDto: AuthRegisterRequest): AuthResponse {
 
         val user = userRepository.findByPlatformId(requestDto.platformId) ?: throw UserNotFoundException()
@@ -112,6 +116,75 @@ class AuthService(
         tokenHashMap["role"] = user.role.toString()
         val jwtToken = jwtService.generateToken(tokenHashMap, savedUser)
 
+        return AuthResponse(jwtToken)
+    }
+
+    @Transactional
+    fun testUser(): AuthResponse {
+        val user = userRepository.findByEmail("test@test.com")
+            ?:userRepository.save(User(
+                platformId = "abcdefg",
+                platformType = "KAKAO",
+                role = Role.USER,
+                name = "테스트 유저계정",
+                email = "test1@test.com",
+                phoneNumber = "010-0000-0000",
+                profileImageUrl = "http://k.kakaocdn.net/dn/bsKq6I/btr5E9S5jol/ABnBzO97fDIG8knP5hUoh1/img_640x640.jpg",
+            ))
+
+        // jwt 토큰 발급
+        val tokenHashMap = HashMap<String, String>()
+        tokenHashMap["id"] = user.id.toString()
+        tokenHashMap["role"] = user.role.toString()
+        val jwtToken = jwtService.generateToken(tokenHashMap, user)
+
+        // 회원가입 결과 반환
+        return AuthResponse(jwtToken)
+    }
+
+    @Transactional
+    fun testChemist(): AuthResponse {
+        val user = userRepository.findByEmail("test@test.com")
+            ?:userRepository.save(User(
+                platformId = "abcdefg",
+                platformType = "KAKAO",
+                role = Role.CHEMIST,
+                name = "테스트 약사계정",
+                email = "test2@test.com",
+                phoneNumber = "010-0000-0000",
+                profileImageUrl = "http://k.kakaocdn.net/dn/bsKq6I/btr5E9S5jol/ABnBzO97fDIG8knP5hUoh1/img_640x640.jpg",
+            ))
+
+        // jwt 토큰 발급
+        val tokenHashMap = HashMap<String, String>()
+        tokenHashMap["id"] = user.id.toString()
+        tokenHashMap["role"] = user.role.toString()
+        val jwtToken = jwtService.generateToken(tokenHashMap, user)
+
+        // 회원가입 결과 반환
+        return AuthResponse(jwtToken)
+    }
+
+    @Transactional
+    fun testPublichealth(): AuthResponse {
+        val user = userRepository.findByEmail("test@test.com")
+            ?:userRepository.save(User(
+                platformId = "abcdefg",
+                platformType = "KAKAO",
+                role = Role.PUBLICHEALTH,
+                name = "테스트 보건소계정",
+                email = "test3@test.com",
+                phoneNumber = "010-0000-0000",
+                profileImageUrl = "http://k.kakaocdn.net/dn/bsKq6I/btr5E9S5jol/ABnBzO97fDIG8knP5hUoh1/img_640x640.jpg",
+            ))
+
+        // jwt 토큰 발급
+        val tokenHashMap = HashMap<String, String>()
+        tokenHashMap["id"] = user.id.toString()
+        tokenHashMap["role"] = user.role.toString()
+        val jwtToken = jwtService.generateToken(tokenHashMap, user)
+
+        // 회원가입 결과 반환
         return AuthResponse(jwtToken)
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails
 @Entity
 @Table(name = "USER")
 class User(
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     // Parameter
@@ -20,7 +20,8 @@ class User(
     var name: String,
     @Column(unique = true)
     val email: String,
-    var phoneNumber: String
+    var phoneNumber: String,
+    var profileImageUrl: String
 ) : UserDetails, TimeZone() {
 
     constructor() : this(
@@ -30,7 +31,8 @@ class User(
         role = Role.USER,
         name = "",
         email = "",
-        phoneNumber = ""
+        phoneNumber = "",
+        profileImageUrl = ""
             ) // NoArgsConstructor
 
     // UserDetails Implements

@@ -52,7 +52,8 @@ class AuthController(
             AuthValidResponse(
                 user_id = user.id!!,
                 user_name = user.name,
-                user_role = user.role.toString()
+                user_role = user.role.toString(),
+                user_profileImageUrl = user.profileImageUrl
             )
         )
     }
@@ -68,8 +69,18 @@ class AuthController(
                 user_platformId = user.platformId,
                 user_name = user.name,
                 user_role = user.role.toString(),
+                user_profileImageUrl = user.profileImageUrl,
                 user_phoneNumber = user.phoneNumber,
             )
         )
     }
+
+    @GetMapping("/USER")
+    fun testUser() = ResponseEntity.ok(authService.testUser())
+
+    @GetMapping("/CHEMIST")
+    fun testChemist() = ResponseEntity.ok(authService.testChemist())
+
+    @GetMapping("/PUBLICHEALTH")
+    fun testPublichealth() = ResponseEntity.ok(authService.testPublichealth())
 }
