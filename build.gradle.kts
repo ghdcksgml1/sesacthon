@@ -29,6 +29,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
+	// aws s3
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+
 	// https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
 	runtimeOnly("org.aspectj:aspectjweaver:1.9.9.1")
 
