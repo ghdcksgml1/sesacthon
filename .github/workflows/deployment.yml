@@ -20,6 +20,9 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     
+    - name: mkdir
+      run: mkdir src/main/resources
+    
     # applicaton.yml 가져오기
     - name: Copy yaml file
       run: cp /home/hongchanhui/src/main/resources/application.yml src/main/resources/application.yml
