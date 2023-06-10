@@ -17,10 +17,10 @@ class User(
     val platformType: String,
     @Enumerated(EnumType.STRING)
     var role: Role,
-    var nickName: String,
+    var name: String,
     @Column(unique = true)
     val email: String,
-    var company: String
+    var phoneNumber: String
 ) : UserDetails, TimeZone() {
 
     constructor() : this(
@@ -28,9 +28,9 @@ class User(
         platformId = "",
         platformType = "",
         role = Role.USER,
-        nickName = "i*****",
+        name = "",
         email = "",
-        company = ""
+        phoneNumber = ""
             ) // NoArgsConstructor
 
     // UserDetails Implements

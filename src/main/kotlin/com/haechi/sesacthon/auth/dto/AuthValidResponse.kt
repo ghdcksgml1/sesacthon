@@ -1,8 +1,8 @@
 package com.haechi.sesacthon.auth.dto
 
 data class AuthValidResponse(
-    val id: Long,
-    val email: String,
-    val company: String
+    val user_id: Long,
+    val user_name: String,
+    val user_role: String
 ) {
 }

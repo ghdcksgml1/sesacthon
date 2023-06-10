@@ -11,6 +11,7 @@ import com.haechi.sesacthon.user.UserRepository
 import com.haechi.sesacthon.user.model.Role
 import com.haechi.sesacthon.user.model.User
 import com.haechi.sesacthon.auth.dto.kakao.*
+import com.haechi.sesacthon.utils.PhoneNumberValid
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -75,10 +76,10 @@ class AuthService(
                 User(
                     platformId = passwordEncoder.encode(kakaoUserInfo.id),
                     platformType = "KAKAO",
-                    nickName = "%c*****".format(email.split("@")[0][0]),
+                    name = kakaoUserInfo.kakao_account.profile.nickname,
                     role = Role.USER,
                     email = email,
-                    company = ""
+                    phoneNumber = ""
                 )
             )
 
@@ -87,7 +88,7 @@ class AuthService(
                 platformType = user.platformType
             )
         } else  { // 닉네임, 프로필 사진 업데이트
-            user.nickName = "%c*****".format(email.split("@")[0][0])
+            user.name = kakaoUserInfo.kakao_account.profile.nickname
 
             user = userRepository.save(user)
         }
@@ -103,7 +104,7 @@ class AuthService(
     fun register(requestDto: AuthRegisterRequest): AuthResponse {
 
         val user = userRepository.findByPlatformId(requestDto.platformId) ?: throw UserNotFoundException()
-        user.company = requestDto.company
+        user.phoneNumber = PhoneNumberValid.valid(requestDto.phoneNumber)
         val savedUser = userRepository.saveAndFlush(user)
 
         val tokenHashMap = HashMap<String, String>()
