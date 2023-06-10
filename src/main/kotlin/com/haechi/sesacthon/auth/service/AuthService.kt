@@ -121,7 +121,7 @@ class AuthService(
 
     @Transactional
     fun testUser(): AuthResponse {
-        val user = userRepository.findByEmail("test@test.com")
+        val user = userRepository.findByEmail("test1@test.com")
             ?:userRepository.save(User(
                 platformId = "abcdefg",
                 platformType = "KAKAO",
@@ -144,7 +144,7 @@ class AuthService(
 
     @Transactional
     fun testChemist(): AuthResponse {
-        val user = userRepository.findByEmail("test@test.com")
+        val user = userRepository.findByEmail("test2@test.com")
             ?:userRepository.save(User(
                 platformId = "abcdefg",
                 platformType = "KAKAO",
@@ -167,7 +167,7 @@ class AuthService(
 
     @Transactional
     fun testPublichealth(): AuthResponse {
-        val user = userRepository.findByEmail("test@test.com")
+        val user = userRepository.findByEmail("test3@test.com")
             ?:userRepository.save(User(
                 platformId = "abcdefg",
                 platformType = "KAKAO",
