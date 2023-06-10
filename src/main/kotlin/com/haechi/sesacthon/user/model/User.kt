@@ -21,7 +21,7 @@ class User(
     @Column(unique = true)
     val email: String,
     var phoneNumber: String,
-    var profileImageUrl: String
+    var profileImageUrl: String?
 ) : UserDetails, TimeZone() {
 
     constructor() : this(
