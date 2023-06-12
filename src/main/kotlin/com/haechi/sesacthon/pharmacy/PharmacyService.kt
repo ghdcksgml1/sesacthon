@@ -56,15 +56,16 @@ class PharmacyService(
     }
 
     fun aroundPharmacyList(latitude: Double, longitude: Double): Any {
-        val radius = 5.0 // km
+        val EARTH_RADIUS = 6371.0
+        val radius = 1000.0 // 1km
 
-        val latDelta = radius / 111.0 // 1도의 위도 변화에 대한 거리 (약 111km)
-        val lonDelta = radius / (111.0 * cos(Math.toRadians(latitude))) // 1도의 경도 변화에 대한 거리
+        val latDelta = (1 / (EARTH_RADIUS * 1 * (Math.PI/ 180))) / 1000
+        val lonDelta = (1 /(EARTH_RADIUS* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(latitude))))/ 1000
 
-        val minLat = latitude - latDelta
-        val maxLat = latitude + latDelta
-        val minLon = longitude + lonDelta
-        val maxLon = longitude - lonDelta
+        val minLat = latitude - (radius * latDelta)
+        val maxLat = latitude + (radius * latDelta)
+        val minLon = longitude + (radius * lonDelta)
+        val maxLon = longitude - (radius * lonDelta)
 
         println("${minLat} ${maxLat} ${minLon} ${maxLon}  ======= ${latitude} ${longitude}")
 
