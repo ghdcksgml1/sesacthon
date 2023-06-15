@@ -49,6 +49,7 @@ class CollectService(
 
         return collect.map { CollectDefaultDto(
             pharmacy_name = it.pharmacy!!.name,
+            pharmacy_address = it.pharmacy!!.address,
             publichealth_name = it.publichealth!!.name,
             collect_id = it.id!!,
             collect_status = it.status.toString(),

@@ -13,8 +13,8 @@ class CollectRepositoryCustomImpl(
     override fun findByIdWithAll(collect_id: Long, user_id: Long): Collect? {
         return queryFactory
             .selectFrom(collect)
-            .join(collect.pharmacy, pharmacy)
-            .join(collect.publichealth, publicHealth)
+            .join(collect.pharmacy, pharmacy).fetchJoin()
+            .join(collect.publichealth, publicHealth).fetchJoin()
             .where(collect.id.eq(collect_id)
                 .and(pharmacy.user.id.eq(user_id)))
             .fetchOne()

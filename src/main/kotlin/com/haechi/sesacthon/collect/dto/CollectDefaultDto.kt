@@ -7,6 +7,7 @@ data class CollectDefaultDto(
 
     // Foreign Key
     val pharmacy_name: String, // 요청 약국
+    val pharmacy_address: String,
     val publichealth_name: String, // 수거 보건소
 
     val collect_id: Long,
@@ -16,6 +17,7 @@ data class CollectDefaultDto(
 ) {
     constructor(collect: Collect) : this(
         pharmacy_name = collect.pharmacy!!.name,
+        pharmacy_address = collect.pharmacy!!.name,
         publichealth_name = collect.publichealth!!.name,
         collect_id = collect.id!!,
         collect_status = collect.status.toString(),
