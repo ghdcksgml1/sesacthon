@@ -43,4 +43,12 @@ class PharmacyController(
     ): ResponseEntity<Any> {
         return ResponseEntity.ok(pharmacyService.localServer(address))
     }
+
+    @Operation(summary = "주소쳐서 위도, 경도 받기")
+    @GetMapping("/address/search")
+    fun addressSearch(
+        @RequestParam("address") address: String
+    ): ResponseEntity<Any> {
+        return ResponseEntity.ok(pharmacyService.localServer(address))
+    }
 }

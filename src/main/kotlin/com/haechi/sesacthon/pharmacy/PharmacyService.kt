@@ -73,6 +73,10 @@ class PharmacyService(
             .map{ PharmacyDefaultDto(it) }
     }
 
+    fun findLocal(address: String): Any {
+        return localServer(address).documents
+    }
+
     fun localServer(address: String): AddressResponse {
         val header = HttpHeaders()
         header.set("Authorization", "KakaoAK " + appKey)
