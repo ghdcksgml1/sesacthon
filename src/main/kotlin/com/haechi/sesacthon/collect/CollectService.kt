@@ -54,7 +54,8 @@ class CollectService(
             collect_id = it.id!!,
             collect_status = it.status.toString(),
             collect_reservationDate = it.reservationDate!!,
-            collect_memo = it.memo
+            collect_memo = it.memo,
+            createdDate = it.createdTime!!
         ) }
     }
 

@@ -14,6 +14,8 @@ data class CollectDefaultDto(
     val collect_status: String, // 수거 현황
     val collect_reservationDate: LocalDateTime, // 수거 날짜
     val collect_memo: String? = null // 메모
+
+    val createdDate: LocalDateTime,
 ) {
     constructor(collect: Collect) : this(
         pharmacy_name = collect.pharmacy!!.name,
@@ -22,7 +24,8 @@ data class CollectDefaultDto(
         collect_id = collect.id!!,
         collect_status = collect.status.toString(),
         collect_reservationDate = collect.reservationDate!!,
-        collect_memo = collect.memo
+        collect_memo = collect.memo,
+        createdDate = collect.createdTime!!
     )
 
 }
