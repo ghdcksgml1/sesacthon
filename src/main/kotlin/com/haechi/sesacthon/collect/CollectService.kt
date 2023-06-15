@@ -16,6 +16,7 @@ import com.haechi.sesacthon.user.model.Role
 import com.haechi.sesacthon.user.model.User
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -37,12 +38,12 @@ class CollectService(
         )
     }
 
-    fun selectAll(user: User): Any {
+    fun selectAll(user: User, memo: String): Any {
         val userRole = user.role
 
         val collect: MutableList<Collect> = when (userRole) {
-            Role.CHEMIST -> collectRepository.findAllWithAllPharmacy(user.id!!)
-            Role.PUBLICHEALTH -> collectRepository.findAllWithAllPublicHealth(user.id!!)
+            Role.CHEMIST -> collectRepository.findAllWithAllPharmacy(user.id!!, memo)
+            Role.PUBLICHEALTH -> collectRepository.findAllWithAllPublicHealth(user.id!!, memo)
             else -> throw UserForbiddenException()
         }
 
@@ -69,8 +70,8 @@ class CollectService(
             collectRepository.saveAndFlush(Collect(
                 pharmacy = pharmacy,
                 publichealth = publichealth,
-                status = CollectType.WAITING,
-                reservationDate = requestDto.reservationDate,
+                status = CollectType.ACCEPT,
+                reservationDate = LocalDateTime.now().plusDays(2),
                 memo = requestDto.memo
             ))
         )

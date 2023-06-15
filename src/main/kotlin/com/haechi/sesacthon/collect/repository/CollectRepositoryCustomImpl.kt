@@ -20,22 +20,24 @@ class CollectRepositoryCustomImpl(
             .fetchOne()
     }
 
-    override fun findAllWithAllPharmacy(user_id: Long): MutableList<Collect> {
+    override fun findAllWithAllPharmacy(user_id: Long, memo: String): MutableList<Collect> {
         return queryFactory
             .selectFrom(collect)
             .join(collect.pharmacy, pharmacy).fetchJoin()
             .join(collect.publichealth, publicHealth).fetchJoin()
-            .where(pharmacy.user.id.eq(user_id))
+            .where(pharmacy.user.id.eq(user_id)
+                .and(collect.memo.eq(memo)))
             .orderBy(collect.id.desc())
             .fetch()
     }
 
-    override fun findAllWithAllPublicHealth(user_id: Long): MutableList<Collect> {
+    override fun findAllWithAllPublicHealth(user_id: Long, memo: String): MutableList<Collect> {
         return queryFactory
             .selectFrom(collect)
             .join(collect.pharmacy, pharmacy).fetchJoin()
             .join(collect.publichealth, publicHealth).fetchJoin()
-            .where(publicHealth.user.id.eq(user_id))
+            .where(publicHealth.user.id.eq(user_id)
+                .and(collect.memo.eq(memo)))
             .orderBy(collect.id.desc())
             .fetch()
     }

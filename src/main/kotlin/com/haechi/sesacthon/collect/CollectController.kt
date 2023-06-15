@@ -21,15 +21,16 @@ class CollectController(
         return ResponseEntity.ok(collectService.select(user, collect_id))
     }
 
-    @Operation(summary = "collect 리스트 조회 CHEMIST, PUBLICHEALTH만 가능")
-    @GetMapping("/list/")
+    @Operation(summary = "collect 리스트 조회 (COLLECT 수거요청, REQUEST 수거통요청) CHEMIST, PUBLICHEALTH만 가능")
+    @GetMapping("/list/{memo}")
     fun select(
-        @AuthenticationPrincipal user: User
+        @AuthenticationPrincipal user: User,
+        @PathVariable("memo") memo: String
     ): ResponseEntity<Any> {
-        return ResponseEntity.ok(collectService.selectAll(user))
+        return ResponseEntity.ok(collectService.selectAll(user, memo))
     }
 
-    @Operation(summary = "약사가 보건소에게 수거 요청, CHEMIST만 가능")
+    @Operation(summary = "약사가 보건소에게 수거 요청(COLLECT 수거요청, REQUEST 수거통요청), CHEMIST만 가능")
     @PostMapping("/request")
     fun request(
         @AuthenticationPrincipal user: User,

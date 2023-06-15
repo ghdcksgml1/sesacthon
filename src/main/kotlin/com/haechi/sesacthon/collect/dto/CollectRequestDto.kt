@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 
 data class CollectRequestDto(
     val publichealth_id: Long, // 요청 보건소
-    val reservationDate: LocalDateTime,
     val memo: String? = null
 ) {
 }
