@@ -17,6 +17,7 @@ class Article(
 
     // Parameter
     val title: String, // 제목
+    @Column(columnDefinition = "text")
     val content: String, // 내용
     val imageUrl: String?, // 대표 사진
 ) {
